@@ -1,0 +1,20 @@
+# Gancho de despliegue al ambiente de test (vm3 / 172.31.2.42).
+#
+# Este archivo va SOLO en la rama uat, siguiendo la convencion documentada en
+# COIPO_DOCUMENTO/ambiente_test/04-workflows-github.md. Toda la mecanica del
+# despliegue vive una sola vez, en Sud-Austral/infra-docker-base.
+#
+# app_name se deriva del nombre del repositorio y nunca se escribe a mano: con el, el
+# workflow reusable arma la ruta /opt/apps/coipo_monitoreo/ en el servidor.
+
+name: Deploy uat
+
+on:
+  push:
+    branches: [uat]
+
+jobs:
+  deploy:
+    uses: Sud-Austral/infra-docker-base/.github/workflows/deploy-uat.yml@main
+    with:
+      app_name: ${{ github.event.repository.name }}

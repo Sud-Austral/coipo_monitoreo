@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# Datos de ejecucion: la base de historial, los logs y los reportes generados no se
+# versionan. El historial vive en el servidor donde corre el monitoreo.
+datos/
+
+# Credenciales de alerta (SMTP, webhook). Se copian a mano en el servidor.
+.env

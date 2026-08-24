@@ -1,0 +1,42 @@
+# Modo contenedor, usado por el ambiente de test (vm3 / 172.31.2.42).
+#
+# Un solo servicio y no el par "app + backend" del patron estandar, porque no hay
+# frontend que construir: el Nginx del host hace de frontal y publica el nombre. El
+# servicio se llama 'backend' igual que en las demas aplicaciones, para que los comandos
+# del runbook (docker compose logs -f backend) sirvan sin cambios.
+#
+# APP_PORT sale del .env que vive en el servidor, nunca del repositorio.
+
+services:
+  backend:
+    build: .
+    image: coipo_monitoreo:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # El intervalo entre corridas se puede ajustar en el .env sin reconstruir nada.
+      COIPO_INTERVALO_MIN: ${COIPO_INTERVALO_MIN:-15}
+      TZ: ${TZ:-America/Santiago}
+    ports:
+      # Solo en loopback: la unica puerta de entrada es el Nginx del host.
+      - "127.0.0.1:${APP_PORT}:8000"
+    volumes:
+      - datos:/datos
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5).status==200 else 1)"]
+      interval: 60s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  # Volumen nombrado a proposito: sobrevive a 'docker compose up --build' y al rsync
+  # con --delete del pipeline. El historial es el activo del monitoreo; si se borra en
+  # cada despliegue, la pregunta "desde cuando esta caido" deja de tener respuesta.
+  datos:

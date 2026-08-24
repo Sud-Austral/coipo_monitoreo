@@ -1,0 +1,13 @@
+# Alternativa a systemd, si el host no lo usa.
+#
+# Instalar con:  crontab -e   y pegar la linea de abajo cambiando la ruta por la real.
+# La ruta tiene que ser absoluta: cron no hereda el directorio de trabajo ni el PATH
+# de tu sesion.
+#
+# El script ya toma el bloqueo con flock, asi que dos corridas nunca se pisan aunque
+# una se demore mas de 15 minutos.
+
+*/15 * * * * /opt/coipo_monitoreo/scripts/chequear.sh >/dev/null 2>&1
+
+# Reporte HTML una vez al dia a las 07:30, para dejarlo a mano:
+30 7 * * * cd /opt/coipo_monitoreo && .venv/bin/python -m coipo_monitoreo reporte --salida datos/reporte.html >/dev/null 2>&1

@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Los scripts de shell tienen que quedar con LF si o si: con CRLF fallan en Linux con
+# "bad interpreter: /usr/bin/env bash^M", que es un error que no dice lo que pasa.
+*.sh text eol=lf

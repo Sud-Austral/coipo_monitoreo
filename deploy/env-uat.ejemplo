@@ -1,0 +1,36 @@
+# Plantilla del archivo que debe existir en vm3 ANTES del primer push a uat:
+#     /opt/apps/coipo_monitoreo/.env
+#
+# El pipeline verifica que exista y falla con un mensaje explicito si no esta. Ademas
+# lee APP_PORT de aca para el smoke test, y el rsync lo excluye, asi que una vez creado
+# no se vuelve a tocar: si mas adelante se agrega una variable obligatoria, hay que
+# agregarla a mano en el servidor.
+#
+# Modo 600 y dueno deploy:
+#     chown deploy:deploy /opt/apps/coipo_monitoreo/.env
+#     chmod 600 /opt/apps/coipo_monitoreo/.env
+
+# --- Obligatorio ---------------------------------------------------------------
+# Puerto asignado por el registro institucional. NO derivarlo ni inventarlo.
+APP_PORT=
+
+# --- Opcional ------------------------------------------------------------------
+# Minutos entre corridas. Cambiarlo aca no requiere reconstruir la imagen.
+COIPO_INTERVALO_MIN=15
+TZ=America/Santiago
+
+# Alertas por correo. Sin esto el monitoreo funciona igual y deja todo en el log del
+# contenedor (docker compose logs -f backend).
+SMTP_HOST=
+SMTP_PUERTO=25
+SMTP_TLS=0
+SMTP_USUARIO=
+SMTP_CLAVE=
+ALERTA_DE=monitoreo-uat@conaf.cl
+ALERTA_PARA=
+
+WEBHOOK_URL=
+
+# NO hay variables de base de datos: el historial va en SQLite dentro del volumen
+# 'coipo_monitoreo_datos'. Este servicio no usa el PostgreSQL de 172.31.2.40, asi que
+# no hay que crear rol ni base (paso 1 de la guia 05 no aplica).

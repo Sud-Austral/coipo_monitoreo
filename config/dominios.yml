@@ -1,0 +1,149 @@
+# Dominios monitoreados y que se espera de cada uno.
+#
+# Este archivo es configuracion, no codigo: agregar o sacar un dominio no requiere
+# tocar el programa. Despues de editarlo:
+#     python -m coipo_monitoreo probar-config
+#
+# Los valores de min_bytes y texto_esperado NO son inventados: salen de medir cada
+# dominio el 12 de agosto de 2026. El tamano real medido va anotado en 'notas'.
+
+base_datos: ../datos/monitoreo.db
+archivo_log: ../datos/coipo_monitoreo.log
+retencion_dias: 90        # los chequeos crudos se purgan; los eventos no se borran nunca
+hilos: 8
+
+# ----------------------------------------------------------------------- resolvers
+#
+# DNS de horizonte partido: los mismos nombres resuelven distinto adentro y afuera.
+# Por eso el resolver se declara explicitamente y no se usa el del sistema: las VMs de
+# aplicacion usan el DNS publico, y desde ellas los nombres resuelven a la IP publica,
+# que no pueden alcanzar. Consultar el DNS del sistema daria un diagnostico equivocado.
+resolvers:
+  interno:
+    servidores: [172.16.1.120]
+    descripcion: DNS interno. Resuelve los dominios a la IP del proxy (172.31.2.100).
+  publico:
+    servidores: [200.27.2.65, 200.27.2.66]
+    descripcion: >
+      DNS publico. Resuelve a 200.29.173.42. Para vigilar tambien el horizonte externo,
+      agregar 'publico' a resolvers_extra: el resultado aparece como hallazgo adicional
+      sin cambiar el estado del dominio. Solo tiene sentido desde un host con salida a
+      internet por el puerto 53.
+
+# ------------------------------------------------------------------ predeterminados
+predeterminados:
+  timeout_s: 6
+  min_bytes: 300            # por debajo de esto la respuesta no es una pagina real
+  estados_ok: [200]
+  esquema: https
+  puerto: 443
+  ruta: /
+
+  # Se consulta la IP del proxy mandando la cabecera Host y el SNI, en vez de conectarse
+  # por nombre. Asi el chequeo funciona igual desde la VM de aplicacion, que resuelve
+  # los nombres a la IP publica inalcanzable. Verificado: da el mismo resultado byte a
+  # byte que el acceso por nombre desde la red interna.
+  via: proxy
+  ip_proxy: 172.31.2.100
+
+  resolver: interno
+  resolvers_extra: []
+  ips_esperadas: [172.31.2.100]
+
+  # El certificado del proxy es un comodin *.conaf.cl y no valida contra la IP: no se
+  # valida en el chequeo, pero el vencimiento se reporta aparte. Medido el 2026-08-12:
+  # vence el 2027-02-16.
+  verificar_tls: false
+  seguir_redirecciones: false
+
+# ---------------------------------------------------------------------- alertas
+alertas:
+  canales: [log]            # agregar 'email' cuando esten las variables SMTP en .env
+  confirmaciones: 2         # 2 corridas seguidas (30 min) antes de dar un cambio por cierto
+  umbral_tormenta: 0.6      # si el 60% falla en el mismo nivel, una sola alerta agregada
+  minimo_tormenta: 3
+  cert_avisar_dias: 30
+  cert_repetir_cada_dias: 7
+
+# --------------------------------------------------------------------- dominios
+dominios:
+
+  # --- en servicio al 2026-08-12 (los valores esperados salen de esa medicion)
+
+  - nombre: prensa.conaf.cl
+    equipo: Monitor de Prensa
+    texto_esperado: "Monitor de Prensa"
+    notas: "medido 2026-08-12: HTTP 200, 2766 bytes"
+
+  - nombre: dendroenergia.conaf.cl
+    equipo: Dendroenergia
+    texto_esperado: "Dendroenerg"
+    notas: "medido 2026-08-12: HTTP 200, 785 bytes"
+
+  - nombre: tv.conaf.cl
+    equipo: Trazabilidad de Madera
+    texto_esperado: "Trazabilidad de Madera"
+    notas: "medido 2026-08-12: HTTP 200, 852 bytes"
+
+  - nombre: nexe.conaf.cl
+    equipo: Entrega de Plantas
+    texto_esperado: "Entrega de Plantas"
+    notas: "medido 2026-08-12: HTTP 200, 935 bytes"
+
+  - nombre: reserva-bienestar.conaf.cl
+    equipo: Casas Bienestar
+    texto_esperado: "Casas Bienestar"
+    notas: "medido 2026-08-12: HTTP 200, 1741 bytes"
+
+  - nombre: iam.conaf.cl
+    equipo: IAM
+    texto_esperado: "COIPO IAM"
+    notas: "medido 2026-08-12: HTTP 200, 749 bytes. Es la autenticacion central: si
+      cae, arrastra a las aplicaciones que dependen de ella."
+
+  - nombre: usuario.conaf.cl
+    equipo: IAM
+    texto_esperado: "IAM Integration"
+    notas: "medido 2026-08-12: HTTP 200, 927 bytes"
+
+  - nombre: academia.conaf.cl
+    equipo: Academia / Moodle
+    estados_ok: [200, 303]
+    notas: "medido 2026-08-12: HTTP 303 hacia el login. El 303 es correcto para este
+      dominio; en una redireccion no se valida el cuerpo, se valida el codigo y el
+      destino."
+
+  # --- degradados al 2026-08-12
+  # Se dejan habilitados a proposito: el monitoreo tiene que registrar la fecha exacta
+  # en que se recuperen, y hasta entonces mantener la evidencia de que siguen caidos.
+
+  - nombre: chat-normativa.conaf.cl
+    equipo: Chatbot Normativa
+    notas: "2026-08-12 DEGRADADO: TLS completa y el proxy corta sin responder
+      (UPSTREAM_SIN_RESPUESTA). Revisar el upstream en el proxy."
+
+  - nombre: evaluacion-prioritaria.conaf.cl
+    equipo: Evaluacion Prioritaria
+    notas: "2026-08-12 DEGRADADO: mismo sintoma que chat-normativa."
+
+  - nombre: interno-saff.conaf.cl
+    equipo: SAFF
+    notas: "2026-08-12 DEGRADADO: mismo sintoma que chat-normativa."
+
+  - nombre: documentacion.conaf.cl
+    equipo: Documentacion
+    notas: "2026-08-12 DEGRADADO: mismo sintoma que chat-normativa."
+
+  - nombre: interno-sidco.conaf.cl
+    equipo: SIDCO
+    notas: "2026-08-12 DEGRADADO: HTTP 200 con 0 bytes. Llega al proxy pero no tiene
+      vhost propio y contesta el catch-all. Un chequeo que solo mire el codigo HTTP
+      da este caso por bueno."
+
+  - nombre: archivo.conaf.cl
+    equipo: Archivo
+    notas: "2026-08-12 DEGRADADO con DOS problemas independientes: (1) no resuelve en
+      el DNS interno (NXDOMAIN) y (2) el proxy tampoco tiene vhost para el, porque
+      consultado por IP con Host devuelve el catch-all de 0 bytes. Restaurar solo el
+      registro DNS dejaria el sitio en blanco: hay que pedir las dos cosas.
+      Funcionaba el 2026-07-30."

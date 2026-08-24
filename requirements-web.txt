@@ -1,0 +1,5 @@
+# Dependencias adicionales del modo contenedor (interfaz HTTP + planificador interno).
+# La instalacion con systemd o cron NO necesita nada de esto: alcanza requirements.txt.
+-r requirements.txt
+fastapi>=0.110
+uvicorn>=0.27
