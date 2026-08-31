@@ -1,0 +1,13 @@
+name: Run README Maintainer
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  call-readme-generator:
+    uses: Sud-Austral/coipo_aireadme/.github/workflows/generate-readme.yml@main
+    secrets: inherit
