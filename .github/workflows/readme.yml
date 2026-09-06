@@ -17,3 +17,15 @@ jobs:
   call-readme-generator:
     # Referencia fija: main es rama de trabajo del hub, no produccion.
     uses: Sud-Austral/coipo_aireadme/.github/workflows/generate-readme.yml@v1
+
+    with:
+      # La misma version, declarada tambien como entrada.
+      #
+      # El `uses:` de arriba solo fija el archivo YAML del workflow. El
+      # codigo Python se descarga dentro con actions/checkout, y sin esta
+      # entrada ese checkout baja la rama por defecto del hub: el tag
+      # congelaria el workflow mientras el motor seguiria viniendo de main.
+      #
+      # Las dos referencias tienen que coincidir. auditar_workflows.py lo
+      # comprueba en toda la flota.
+      engine_ref: v1
