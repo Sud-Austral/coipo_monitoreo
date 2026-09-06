@@ -5,9 +5,15 @@ on:
     branches:
       - main
 
+    paths-ignore:
+      # Editar este archivo no debe disparar una regeneracion del README.
+      # Sin esta linea, repuntar el stub en la flota generaria una ejecucion
+      # y un pull request por cada repositorio tocado.
+      - '.github/workflows/readme.yml'
+
   workflow_dispatch:
 
 jobs:
   call-readme-generator:
-    uses: Sud-Austral/coipo_aireadme/.github/workflows/generate-readme.yml@main
-    secrets: inherit
+    # Referencia fija: main es rama de trabajo del hub, no produccion.
+    uses: Sud-Austral/coipo_aireadme/.github/workflows/generate-readme.yml@v1
