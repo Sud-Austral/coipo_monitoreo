@@ -1,0 +1,161 @@
+archivos:
+
+  - ruta: config/dominios.yml
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] es el archivo con mas probabilidad de contener datos de contacto, porque el codigo deriva de la configuracion quien responde por cada nivel [coipo_monitoreo/modelos.py]; patron y conteo no determinados en la evidencia, que no incluye el contenido del archivo"
+    puede_versionarse: "[VERIFICAR] depende de contiene_pii"
+    uso: "Unica fuente de lo que se vigila: la lista de dominios y sus parametros, leida y validada por [coipo_monitoreo/config.py]."
+
+  - ruta: .env.ejemplo
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] plantilla de variables; [VERIFICAR] si trae valores reales de remitente o destinatarios de alerta [coipo_monitoreo/notificadores.py:53], [coipo_monitoreo/notificadores.py:54] en vez de marcadores de posicion"
+    puede_versionarse: "[VERIFICAR] depende de contiene_pii"
+    uso: "Plantilla de las variables de entorno que el programa lee."
+
+  - ruta: deploy/env-uat.ejemplo
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] plantilla de variables del ambiente de prueba; [VERIFICAR] si trae credenciales de correo [coipo_monitoreo/notificadores.py:51] o direcciones reales en vez de marcadores de posicion"
+    puede_versionarse: "[VERIFICAR] depende de contiene_pii"
+    uso: "Plantilla de variables para el despliegue en el ambiente de prueba."
+
+  - ruta: requirements.txt
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados; solo nombres y versiones de dependencias"
+    puede_versionarse: true
+    uso: "Dependencias del nucleo del programa."
+
+  - ruta: requirements-web.txt
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Dependencias adicionales de la via de consulta en linea [coipo_monitoreo/web.py:154]."
+
+  - ruta: requirements-dev.txt
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Dependencias para correr las pruebas."
+
+  - ruta: pyproject.toml
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de datos personales detectado; [VERIFICAR] si declara autor o contacto de mantenedor"
+    puede_versionarse: true
+    uso: "Manifiesto del paquete de Python."
+
+  - ruta: Dockerfile
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Imagen del programa para correrlo en contenedor."
+
+  - ruta: docker-compose.yml
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Orquestacion local del contenedor."
+
+  - ruta: .dockerignore
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Exclusiones al construir la imagen."
+
+  - ruta: .github/workflows/deploy-uat.yml
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de datos personales detectado; [VERIFICAR] si nombra servidores o rutas de despliegue"
+    puede_versionarse: true
+    uso: "Despliegue automatizado al ambiente de prueba."
+
+  - ruta: .github/workflows/readme.yml
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Flujo de trabajo automatizado del repositorio; su alcance exacto es [PENDIENTE]."
+
+  - ruta: deploy/vhost-monitoreo-uat.conf
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de datos personales detectado; contiene configuracion de red del ambiente de prueba, que no se transcribe aca"
+    puede_versionarse: "[VERIFICAR] depende de si la configuracion de red puede figurar en un repositorio"
+    uso: "Publicacion de la via de consulta en linea en el ambiente de prueba."
+
+  - ruta: deploy/crontab.ejemplo
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Plantilla para dejar la revision programada en un servidor."
+
+  - ruta: deploy/tarea-windows.ps1
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Deja la revision programada en un equipo Windows."
+
+  - ruta: scripts/instalar.sh
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Instalacion del programa."
+
+  - ruta: scripts/chequear.sh
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Disparo de una corrida de revision."
+
+  - ruta: docs/operacion.md
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] documentacion de operacion; patron y conteo no determinados en la evidencia"
+    puede_versionarse: "[VERIFICAR] depende de contiene_pii"
+    uso: "Instrucciones de operacion del sistema."
+
+  - ruta: docs/ambiente-test.md
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] documentacion del ambiente de prueba; patron y conteo no determinados en la evidencia"
+    puede_versionarse: "[VERIFICAR] depende de contiene_pii"
+    uso: "Descripcion del ambiente de prueba."
+
+  - ruta: README.md
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de datos personales detectado; contiene direcciones de red internas y una cifra de dominios degradados que nadie del negocio ha confirmado"
+    puede_versionarse: "[VERIFICAR] depende de si las direcciones de red internas pueden figurar en un repositorio publico"
+    uso: "Documentacion principal; describe el problema, los niveles de falla y la razon de no depender de infraestructura compartida."
+
+  - ruta: .gitignore
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Exclusiones del control de versiones; es donde tendria que estar anclada cualquier ruta que resulte no versionable."
+
+  - ruta: .gitattributes
+    sha256: "[PENDIENTE] sin calcular"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patrones detectados"
+    puede_versionarse: true
+    uso: "Configuracion del control de versiones."
+
+pendientes_de_declaracion:
+  - "[PENDIENTE] Origen de [config/dominios.yml]: quien entrego la lista de dominios y de responsables, cuando, y quien la mantiene."
+  - "[VERIFICAR] Si [config/dominios.yml] contiene datos de contacto de personas. Es la revision mas urgente del repositorio, que figura como publico en los metadatos de la evidencia."
+  - "[VERIFICAR] Si [.env.ejemplo] y [deploy/env-uat.ejemplo] traen valores reales en lugar de marcadores de posicion, en particular los de correo [coipo_monitoreo/notificadores.py:48] a [coipo_monitoreo/notificadores.py:54]."
+  - "[PENDIENTE] El archivo de historial que genera el programa [coipo_monitoreo/config.py:256] no figura en la evidencia como archivo del repositorio; confirmar que su ruta esta excluida del control de versiones."
