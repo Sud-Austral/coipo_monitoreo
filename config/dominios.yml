@@ -80,15 +80,18 @@ dominios:
     texto_esperado: "Dendroenerg"
     notas: "medido 2026-08-12: HTTP 200, 785 bytes"
 
-  - nombre: tv.conaf.cl
+  - nombre: glt.conaf.cl
     equipo: Trazabilidad de Madera
     texto_esperado: "Trazabilidad de Madera"
-    notas: "medido 2026-08-12: HTTP 200, 852 bytes"
+    notas: "renombrado desde tv.conaf.cl el 2026-09-24; medido ese dia: HTTP 200. tv.conaf.cl
+      sigue respondiendo como alias porque la app movil lleva esa direccion escrita dentro"
 
-  - nombre: nexe.conaf.cl
-    equipo: Entrega de Plantas
-    texto_esperado: "Entrega de Plantas"
-    notas: "medido 2026-08-12: HTTP 200, 935 bytes"
+  - nombre: n8n.conaf.cl
+    equipo: Automatizaciones (n8n)
+    texto_esperado: "n8n"
+    notas: "renombrado desde nexe.conaf.cl el 2026-09-24; medido ese dia: HTTP 200, titulo
+      'n8n.io - Workflow Automation'. La entrada anterior esperaba 'Entrega de Plantas', que
+      ya no correspondia: ese dominio servia n8n"
 
   - nombre: reserva-bienestar.conaf.cl
     equipo: Casas Bienestar
@@ -130,9 +133,12 @@ dominios:
     equipo: SAFF
     notas: "2026-08-12 DEGRADADO: mismo sintoma que chat-normativa."
 
-  - nombre: documentacion.conaf.cl
-    equipo: Documentacion
-    notas: "2026-08-12 DEGRADADO: mismo sintoma que chat-normativa."
+  - nombre: prueba4.conaf.cl
+    equipo: Boton Rojo
+    texto_esperado: "Boton Rojo"
+    notas: "renombrado desde documentacion.conaf.cl el 2026-09-24; medido ese dia: HTTP 200,
+      titulo 'Boton Rojo - condiciones para que un incendio se propague'. Ya no esta degradado:
+      en agosto no habia aplicacion detras"
 
   - nombre: interno-sidco.conaf.cl
     equipo: SIDCO
