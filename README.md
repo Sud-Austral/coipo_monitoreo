@@ -264,6 +264,18 @@ bytes. Si Informática restaura el registro DNS, el sitio va a seguir apareciend
 blanco. Hay que pedir las dos cosas. Por eso el monitoreo sigue midiendo todas las capas
 aunque la primera ya haya fallado, y reporta los hallazgos de las demás.
 
+**Nombres vigentes (actualizado 2026-10-24).** La tabla es la medición histórica de agosto, con los
+nombres de entonces. Según `config/dominios.yml`, el 2026-09-24 se renombraron tres dominios:
+`tv` -> `glt.conaf.cl`, `nexe` -> `n8n.conaf.cl` y `documentacion` -> `prueba4.conaf.cl` (este último medido
+ese día en servicio, ya no degradado). `tv.conaf.cl` sigue respondiendo como alias. El estado actual de cada
+dominio se obtiene con `python -m coipo_monitoreo estado`; no lo comprobé hoy contra la red de CONAF.
+
+## Documentación
+
+- [`CLAUDE.md`](CLAUDE.md): guía para agentes.
+- [`insumos/00-PROBLEMA.md`](insumos/00-PROBLEMA.md) y [`insumos/01-SOLUCION.md`](insumos/01-SOLUCION.md): problema y solución, derivados del código.
+- [`docs/operacion.md`](docs/operacion.md) y [`docs/ambiente-test.md`](docs/ambiente-test.md).
+
 ## Notas
 
 - Requiere Python 3.10 o superior. Sin instalación: `python -m coipo_monitoreo` funciona
