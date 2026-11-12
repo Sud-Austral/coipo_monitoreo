@@ -133,12 +133,12 @@ dominios:
     equipo: SAFF
     notas: "2026-08-12 DEGRADADO: mismo sintoma que chat-normativa."
 
-  - nombre: prueba4.conaf.cl
-    equipo: Boton Rojo
-    texto_esperado: "Boton Rojo"
-    notas: "renombrado desde documentacion.conaf.cl el 2026-09-24; medido ese dia: HTTP 200,
-      titulo 'Boton Rojo - condiciones para que un incendio se propague'. Ya no esta degradado:
-      en agosto no habia aplicacion detras"
+  - nombre: firms.conaf.cl
+    equipo: FIRMS
+    texto_esperado: "Focos de calor"
+    notas: "2026-11-10: prueba4.conaf.cl pasa a firms.conaf.cl (coipo_firms, vm3:8169 por vm2). Medido ese dia
+      desde vm2 con cabecera Host: HTTP 200, titulo 'Focos de calor en Chile en tiempo casi real'. El
+      balanceador aun no acepta el nombre por HTTPS (respuesta vacia): pendiente de Informatica."
 
   - nombre: interno-sidco.conaf.cl
     equipo: SIDCO
