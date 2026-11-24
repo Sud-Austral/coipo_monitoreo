@@ -22,8 +22,8 @@ planificador interno).
 pip install -r requirements.txt                 # modo script; requirements-web.txt para el contenedor; requirements-dev.txt para pytest
 python -m coipo_monitoreo demo                  # demostración local sin red de CONAF
 python -m coipo_monitoreo chequear --sin-guardar --sin-alertas
-python -m coipo_monitoreo probar-config         # valida config/dominios.yml
-python -m pytest -q                             # VERIFICADO: 30 pasan (~105 s en Windows)
+python -m coipo_monitoreo probar-config         # valida config/dominios.yml (2026-11-24: sale 0 con los 14 dominios)
+python -m pytest -q                             # VERIFICADO el 2026-11-24: 30 pasan (110 s en Windows)
 ```
 Códigos de salida de `chequear`: 0 todo en servicio, 1 hay caídos, 2 error de configuración.
 No hay linter configurado.
